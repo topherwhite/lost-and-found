@@ -15,7 +15,7 @@ var app = express();
 
 // Sequelize Database ORM Initialization
 var Sequelize = require("sequelize");
-var modelNames = [ "item" ];
+var modelNames = [ "item", "person", "claim"];
 var db = require("./config/sequelize.js").createConnection(Sequelize,process.env);
 var Model = require("./model/_all.js").createModel(db,Sequelize,modelNames);
 
