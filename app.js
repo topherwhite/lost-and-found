@@ -37,7 +37,6 @@ if ('development' == app.get('env')) {
 var callbacks = {}; for (var i = 0; i < modelNames.length; i++) {
   var filePath = './routes/'+modelNames[i]+'.js'; if (fs.existsSync(filePath)) { callbacks[modelNames[i]] = require(filePath); } }
 
-
 app.get('/', routes.index);
 
 app.post('/item', callbacks.item.create);
