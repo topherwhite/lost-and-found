@@ -14,7 +14,7 @@ var app = express();
 
 // Sequelize Database ORM Initialization
 var Sequelize = require("sequelize");
-var modelNames = [ "item", "person", "claim"];
+var modelNames = [ "item", "person", "claim", "bag", "clothing", "accessory", "key", "phone", "tablet"];
 var db = require("./config/sequelize.js").createConnection(Sequelize,process.env);
 global.Model = require("./model/_all.js").createModel(db,Sequelize,modelNames);
 
@@ -34,7 +34,7 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
-var callbacks = {}; for (var i = 0; i < modelNames.length; i++) { callbacks[modelNames[i]] = require('./routes/'+modelNames[i]+'.js'); }
+var callbacks = {}; for (var i = 0; i < modelNames.length; i++) { callbacks[modelNames[i]] = require('./routes/'+modelNames[i]+'.js');  }
 
 
 app.get('/', routes.index);
