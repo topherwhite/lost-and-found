@@ -1,9 +1,5 @@
 
-/*
- * GET users listing.
- */
-
-
+var Model = global.Model;
 
 exports.list = function(req, res){
   res.send("respond with a resource");
@@ -12,8 +8,16 @@ exports.list = function(req, res){
 
 exports.create = function(req, res) {
 
-  var Model = global.Model;
 
-  res.render("index", { thing: "blah" });
+
+  Model.Person.findOrCreate({
+    email: req.body.email.toLowerCase()
+  }).success(function(_Person){
+    if (typeof req.body.phone !== "undefined") { _Person.phone = req.body.phone; _Person.save(); }
+    
+    res.send(_Person);
+  }).error(function(e){
+    console.error(e); res.send({},500);
+  });
 
 };

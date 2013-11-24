@@ -2,10 +2,13 @@ exports.createModel = function(sequelize, DataTypes, modelNames) {
   
   var Model = {};
   var Assoc = require(__dirname+"/_assoc.js").getAssoc();
+  var fs = require("fs");
 
   for (var i = 0; i < modelNames.length; i++) {
+    var filePath = __dirname+"/"+modelNames[i]+".js";
+    if (!fs.existsSync(filePath)) { filePath = __dirname+"/item_type/"+modelNames[i]+".js"; }
     Model[modelNames[i].charAt(0).toUpperCase()+modelNames[i].slice(1)] =
-      require(__dirname+"/"+modelNames[i]+".js").defineModel(sequelize, DataTypes);
+      require(filePath).defineModel(sequelize, DataTypes);
   }
   
   for (var i in Assoc.hasMany) {
