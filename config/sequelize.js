@@ -19,7 +19,7 @@ exports.createConnection = function(Sequelize, Env) {
         maxConnections: 5,
         maxIdleTime: 30
       },
-      logging: false
+      logging: true
     }
   );
 };
