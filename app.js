@@ -34,7 +34,8 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
-var callbacks = {}; for (var i = 0; i < modelNames.length; i++) { callbacks[modelNames[i]] = require('./routes/'+modelNames[i]+'.js'); }
+var callbacks = {}; for (var i = 0; i < modelNames.length; i++) {
+  var filePath = './routes/'+modelNames[i]+'.js'; if (fs.existsSync(filePath)) { callbacks[modelNames[i]] = require(filePath); } }
 
 
 app.get('/', routes.index);
