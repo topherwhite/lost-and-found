@@ -1,5 +1,6 @@
 
 var Model = global.Model;
+var Mail = global.Mail;
 
 exports.list = function(req, res){
   res.send("respond with a resource");
@@ -38,6 +39,11 @@ exports.create = function(req, res) {
               res.send({
                 item: _Item, claim: _Claim, person: _Person
               });
+
+							res.render('mail_newclaim', {title: ''}, function(err, html) {
+							    console.log("New claim created, inform the claim owner");
+									Mail.sendMail("Mail Test", html);
+							  });
             
             }).error(function(e){
             console.error(e); res.send({},500);

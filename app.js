@@ -17,6 +17,8 @@ var modelNames = [ "item", "person", "claim", "bag", "clothing", "accessory", "k
 var db = require("./config/sequelize.js").createConnection(Sequelize,process.env);
 global.Model = require("./model/_all.js").createModel(db,Sequelize,modelNames);
 
+global.Mail = require("./mail.js");
+
 // all environments
 app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
