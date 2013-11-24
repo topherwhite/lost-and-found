@@ -1,10 +1,19 @@
 exports.defineModel = function(sequelize, DataTypes) {
   return sequelize.define(
     "Item", {
-		type: { type: DataTypes.STRING, allowNull: false, unique: false, validate: {}},
-		title: { type: DataTypes.STRING, allowNull: false, unique: false, validate: {}},
-		imagelink: { type: DataTypes.STRING, allowNull: false, unique: false, validate: {}},
-		description: { type: DataTypes.TEXT, validate: {}}
+		type: { 
+			type: DataTypes.ENUM, allowNull: false, unique: false, validate: {}, 
+			values: [
+				"glasses", 
+				"bag",
+				"keys",
+				"phone",
+				"tablet",
+				"wallet",
+				"clothing",
+				"other"
+				]	
+		}
     },
 	{
       // column naming customization
