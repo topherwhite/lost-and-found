@@ -1,7 +1,9 @@
-
-/**
- * Module dependencies.
- */
+// check for environmental variable file and load if present
+var fs = require("fs");
+if (fs.existsSync("./config/env_vars.js")) {
+  var env = require("./config/env_vars.js").env;
+  for (i in env) { process.env[i] = env[i]; }
+}
 
 var express = require('express');
 var routes = require('./routes');
@@ -10,6 +12,12 @@ var http = require('http');
 var path = require('path');
 
 var app = express();
+
+// Sequelize Database ORM Initialization
+var Sequelize = require("sequelize");
+var modelNames = [ "item" ];
+var db = require("./config/sequelize.js").createConnection(Sequelize,process.env);
+var Model = require("./model/_all.js").createModel(db,Sequelize,modelNames);
 
 // all environments
 app.set('port', process.env.PORT || 3000);
