@@ -5,9 +5,20 @@ exports.list = function(req, res){
   res.send("respond with a resource");
 };
 
+exports.add = function(req, res){
+  var fields = [], j = 0;
+  for (i in Model.Person.rawAttributes) {
+    if ((i != "id")&&(i != "updated_at")&&(i != "created_at")) {
+      fields[j] = Model.Person.rawAttributes[i];
+      fields[j].attribute_name = i;
+      j++;
+    }
+    res.render("create", { this_version: "asdfasdf" } );
+  }
+  res.end();
+};
 
 exports.create = function(req, res) {
-
 
   Model.Person.findOrCreate({
     email: req.body.email.toLowerCase()
@@ -19,11 +30,15 @@ exports.create = function(req, res) {
       time: new Date(req.body.time)
     }).success(function(_Claim){
       _Person.addClaim(_Claim).success(function(_Claim){
-        Model.Item.findOrCreate({
+        Model.Item.create({
             type: req.body.item_type
           }).success(function(_Item){
             _Claim.addItem(_Item).success(function(_Item){
-              res.send(_Item);
+
+              res.send({
+                item: _Item, claim: _Claim, person: _Person
+              });
+            
             }).error(function(e){
             console.error(e); res.send({},500);
           }); 
