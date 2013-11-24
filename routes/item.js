@@ -9,20 +9,19 @@ exports.list = function(req, res){
 exports.create = function(req, res) {
 
 
-
   Model.Person.findOrCreate({
     email: req.body.email.toLowerCase()
   }).success(function(_Person){
     if (typeof req.body.phone !== "undefined") { _Person.phone = req.body.phone; _Person.save(); }
-    _Person.addItem({
+    _Person.addClaim({
       type: req.body.type,
-      title: req.body.title,
-      imagelink: req.body.imagelink,
+      location: req.body.location,
+      time: new Date(req.body.time),
       description: req.body.description
-    }).success(function(_Item){
+    }).success(function(_Claim){
 
 
-      res.send(_Item);
+      res.send(_Person);
 
     }).error(function(e){
       console.error(e); res.send({},500);
