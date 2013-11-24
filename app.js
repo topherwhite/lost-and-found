@@ -7,7 +7,6 @@ if (fs.existsSync("./config/env_vars.js")) {
 
 var express = require('express');
 var routes = require('./routes');
-var user = require('./routes/user');
 var http = require('http');
 var path = require('path');
 
@@ -17,7 +16,7 @@ var app = express();
 var Sequelize = require("sequelize");
 var modelNames = [ "item" ];
 var db = require("./config/sequelize.js").createConnection(Sequelize,process.env);
-var Model = require("./model/_all.js").createModel(db,Sequelize,modelNames);
+global.Model = require("./model/_all.js").createModel(db,Sequelize,modelNames);
 
 // all environments
 app.set('port', process.env.PORT || 3000);
@@ -35,8 +34,13 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
+var callbacks = {}; for (var i = 0; i < modelNames.length; i++) { callbacks[modelNames[i]] = require('./routes/'+modelNames[i]+'.js'); }
+
+
 app.get('/', routes.index);
-app.get('/users', user.list);
+
+app.post('/item', callbacks.item.create);
+
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
