@@ -9,7 +9,6 @@ var express = require('express');
 var routes = require('./routes');
 var http = require('http');
 var path = require('path');
-
 var app = express();
 
 // Sequelize Database ORM Initialization
@@ -38,10 +37,12 @@ var callbacks = {}; for (var i = 0; i < modelNames.length; i++) {
   var filePath = './routes/'+modelNames[i]+'.js'; if (fs.existsSync(filePath)) { callbacks[modelNames[i]] = require(filePath); } }
 
 app.get('/', routes.index);
-
 app.post('/item', callbacks.item.create);
 
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
 });
+
+
+//.sendMail("Mail Test", "Test message <strong>with bold</strong>");
