@@ -7,17 +7,27 @@ exports.list = function(req, res){
 };
 
 exports.add = function(req, res){
-  var fields = [], j = 0;
-  for (i in Model.Person.rawAttributes) {
+  var fields = [];
+  fields = consolidateFields(Model.Person,"person",fields);
+  fields = consolidateFields(Model.Claim,"claim",fields);
+  fields = consolidateFields(Model.Item,"item",fields);
+
+  res.render("create", { "fields": fields });
+  console.log(fields);
+};
+
+function consolidateFields(ModelType,ModelName,fieldArray) {
+  var j = fieldArray.length;
+  for (i in ModelType.rawAttributes) {
     if ((i != "id")&&(i != "updated_at")&&(i != "created_at")) {
-      fields[j] = Model.Person.rawAttributes[i];
-      fields[j].attribute_name = i;
+      fieldArray[j] = ModelType.rawAttributes[i];
+      fieldArray[j].id = i;
+      fieldArray[j].model = ModelName;
       j++;
     }
-    res.render("create", { this_version: "asdfasdf" } );
   }
-  res.end();
-};
+  return fieldArray;
+}
 
 exports.create = function(req, res) {
 

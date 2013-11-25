@@ -1,5 +1,19 @@
 extends layout
 
 block content
-  h1= title
-  p= "#{this_version}"
+  form(role='form')
+    for field in fields
+
+      if (field['type']['_typeName'] == "VARCHAR")
+        div.form-group
+          label(for=field['id'])= field['id']
+          input.form-control(type='text',placeholder="Enter #{field['id']}",name=field['id'],id=field['id'])
+
+      if (field['type'] == "TINYINT(1)")
+        li
+          input(type='checkbox',name=field['id'],id=field['id'])
+
+
+
+
+
