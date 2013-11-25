@@ -1,5 +1,10 @@
 extends layout
 
 block content
-  h1= A new claim has been created
-  p Please find below the details of the claim.
+	h1= title
+	p. 
+		A new claim was created by #{person.email}<br />#{claim.type} items details:<br />
+		ul
+			li Type: #{item.type}
+			li Location: #{item.location}
+			li Estimated time: #{item.time} 

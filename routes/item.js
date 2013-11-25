@@ -41,9 +41,10 @@ exports.create = function(req, res) {
               });
 
 							//sendmail
-							res.render('mail_newclaim', {title: ''}, function(err, html) {
-							    console.log("A new claim has been created");
-									Mail.sendMail("A new claim has been created", html);
+							res.render('mail_newclaim', { person:_Person, claim:_Claim, item:_Item}, function(err, html) {
+								console.log(err);    
+								console.log(html);
+									Mail.sendMail("New claim", html);
 							  });
             
             }).error(function(e){
