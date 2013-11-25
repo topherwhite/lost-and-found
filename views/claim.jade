@@ -1,0 +1,35 @@
+extends layout
+
+block content
+  h1 #{claims.length} registered claims
+  table#claims
+    thead
+      tr
+        th Number
+        th Type
+        th Item
+        th Location
+        th Reported At
+        th Status
+      tbody
+        each claim, index in claims
+          tr
+            td
+              a(href="/claims/#{index}") #{claim.id}
+            td
+              | #{claim.type}
+            td
+              | Item name
+            td
+              | #{claim.location}
+            td
+              | #{claim.time}
+            td
+              | #{claim.resolved}
+              
+  script(type='text/javascript').
+      $(document).ready(function() {
+        $('#claims').dataTable();
+        $('#claims').show();
+      });
+            

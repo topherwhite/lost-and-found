@@ -40,6 +40,7 @@ var callbacks = {}; for (var i = 0; i < modelNames.length; i++) {
 
 app.get('/item', callbacks.item.add);
 app.post('/item', callbacks.item.create);
+app.get('/claims', callbacks.claim.list);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
