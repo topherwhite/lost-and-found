@@ -40,9 +40,10 @@ exports.create = function(req, res) {
                 item: _Item, claim: _Claim, person: _Person
               });
 
+							//sendmail
 							res.render('mail_newclaim', {title: ''}, function(err, html) {
-							    console.log("New claim created, inform the claim owner");
-									Mail.sendMail("Mail Test", html);
+							    console.log("A new claim has been created");
+									Mail.sendMail("A new claim has been created", html);
 							  });
             
             }).error(function(e){
