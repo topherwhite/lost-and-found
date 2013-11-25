@@ -1,7 +1,7 @@
 extends layout
 
 block content
-  form(role='form')
+  form.form-horizontal(role='form')
     for field in fields
 
       if (field['type']['_typeName'] == "VARCHAR")
@@ -9,9 +9,26 @@ block content
           label(for=field['id'])= field['id']
           input.form-control(type='text',placeholder="Enter #{field['id']}",name=field['id'],id=field['id'])
 
-      if (field['type'] == "TINYINT(1)")
-        li
+      else if (field['type'] == "TINYINT(1)")
+        div.form-group
+          label(for=field['id'])= field['id']
           input(type='checkbox',name=field['id'],id=field['id'])
+
+      else if (field['values'] != undefined)
+        div.form-group
+          label(for=field['id'])= field['id']
+          select.form-control
+            option(selected)= '- choose one -'
+            for opt in field['values']
+              option= opt
+
+      else if (field['type'] == "DATETIME")
+        div.form-group
+          label(for=field['id'])= field['id']
+          input(type='date',name=field['id'],id=field['id'])
+          input(type='time',name=field['id'],id=field['id'])
+
+    a.btn.btn-default(href='javascript:LF.submitClaim();')= "Create my Claim"
 
 
 
