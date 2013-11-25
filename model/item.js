@@ -13,7 +13,9 @@ exports.defineModel = function(sequelize, DataTypes) {
 				"clothing",
 				"other"
 				]	
-		}
+		},
+			short_description: {type:DataTypes.STRING, allowNull: false, unique: false, validate: {}},
+			long_description: {type:DataTypes.TEXT, allowNull: false, unique: false, validate: {}}
     },
 	{
       // column naming customization
