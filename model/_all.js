@@ -19,7 +19,7 @@ exports.createModel = function(sequelize, DataTypes, modelNames) {
     Model[Assoc.hasOne[i].parent].hasOne(Model[Assoc.hasOne[i].child],{as:Assoc.hasOne[i].as});
   }
 
-	Model["Item"].belongsTo(Model["Claim"]);
+	//Model["Item"].belongsTo(Model["Claim"]);
 
   var syncChain = new DataTypes.Utils.QueryChainer();
   for (var i in Model) { syncChain.add(Model[i].sync()); }

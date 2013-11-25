@@ -12,7 +12,7 @@ exports.getAssoc = function() {
     ], 
     hasMany: [
 		{ parent: "Person", child: "Claim", as: "Claim" },
-		//{ parent: "Claim", child: "Item", as: "Item" }
+		{ parent: "Claim", child: "Item", as: "Item" }
     ]
   };
 
