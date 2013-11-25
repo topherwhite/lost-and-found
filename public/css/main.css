@@ -1,5 +1,5 @@
 body {
-  padding: 50px;
+  padding: 0px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
@@ -9,3 +9,10 @@ a {
 
 #claims {display:none;}
 
+.nav { width:90%; font-size:24px; }
+
+.btn-success { width:80%; }
+
+.nav {  }
+
+/*.container { padding-left:0px; padding-right:0px; }*/

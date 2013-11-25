@@ -1,36 +1,51 @@
 extends layout
 
 block content
+
+
   form.form-horizontal(role='form')
+
     for field in fields
 
-      if (field['type']['_typeName'] == "VARCHAR")
+      if ((fields.indexOf(field) > 0) && (fields[fields.indexOf(field)-1]['model']!=field['model']))
+        if (field['model'].toLowerCase()=='claim')
+          hr
+          | I'm reporting an item that has been:
+          ul.nav.nav-tabs
+            li.active
+              a(href='#')= "lost"
+            li
+              a(href='#')= "found"
+        else
+          hr
+
+
+      if (field['promptUserInput'] != false)
+
         div.form-group
-          label(for=field['id'])= field['id']
-          input.form-control(type='text',placeholder="Enter #{field['id']}",name=field['id'],id=field['id'])
+          label(for=field['id'])= field['msg']
 
-      else if (field['type'] == "TINYINT(1)")
-        div.form-group
-          label(for=field['id'])= field['id']
-          input(type='checkbox',name=field['id'],id=field['id'])
+          if ((field['type']['_typeName'] == "VARCHAR") || (field['type']['_typeName'] == "STRING"))
+            input.form-control(type='text',placeholder="Enter #{field['id']}",name=field['id'],id=field['id'])
 
-      else if (field['values'] != undefined)
-        div.form-group
-          label(for=field['id'])= field['id']
-          select.form-control
-            option(selected)= '- choose one -'
-            for opt in field['values']
-              option= opt
+          else if (field['type'] == "TEXT") 
+            input.form-control(type='text',placeholder="Enter #{field['id']}",name=field['id'],id=field['id'])
 
-      else if (field['type'] == "DATETIME")
-        div.form-group
-          label(for=field['id'])= field['id']
-          input(type='date',name=field['id'],id=field['id'])
-          input(type='time',name=field['id'],id=field['id'])
+          else if (field['type'] == "TINYINT(1)")
+            input(type='checkbox',name=field['id'],id=field['id'])
 
-    a.btn.btn-default(href='javascript:LF.submitClaim();')= "Create my Claim"
+          else if (field['values'] != undefined)
+            select.form-control
+              option(selected)= '- choose one -'
+              for opt in field['values']
+                option= opt
 
+          else if (field['type'] == "DATETIME")
+            input(type='date',name="#{field['id']}-date",id="#{field['id']}-date")
+            input(type='time',name="#{field['id']}-time",id="#{field['id']}-time")
 
+    hr
+    a.btn.btn-success(href='javascript:LF.submitClaim();')= "Create my Claim"
 
 
 

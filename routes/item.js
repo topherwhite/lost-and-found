@@ -23,6 +23,7 @@ function consolidateFields(ModelType,ModelName,fieldArray) {
       fieldArray[j] = ModelType.rawAttributes[i];
       fieldArray[j].id = i;
       fieldArray[j].model = ModelName;
+      fieldArray[j].msg = (typeof fieldArray[j].promptUserInputMsg == undefined) ? i : fieldArray[j].promptUserInputMsg;
       j++;
     }
   }
@@ -42,7 +43,9 @@ exports.create = function(req, res) {
     }).success(function(_Claim){
       _Person.addClaim(_Claim).success(function(_Claim){
         Model.Item.create({
-            type: req.body.item_type
+            type: req.body.item_type,
+            short_description: req.body.short_description,
+            long_description: req.body.long_description
           }).success(function(_Item){
             _Claim.addItem(_Item).success(function(_Item){
 
