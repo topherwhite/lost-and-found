@@ -45,6 +45,3 @@ app.post('/item', callbacks.item.create);
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
 });
-
-
-//.sendMail("Mail Test", "Test message <strong>with bold</strong>");
