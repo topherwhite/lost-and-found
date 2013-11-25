@@ -1,7 +1,8 @@
 extends layout
 
 block content
-  h1 #{claims.length} registered claims
+  h1 #{claims.length} registered claims 
+    a(href="/item") (Add a claim)
   table#claims
     thead
       tr
@@ -15,15 +16,21 @@ block content
         each claim, index in claims
           tr
             td
-              a(href="/claims/#{index}") #{claim.id}
+              a(href="/claims/#{claim.id}") #{claim.id}
             td
-              | #{claim.type}
+              if (claim.type == "lost")
+                | Lost Item
+              else
+                | Found Item
             td
-              | Item name
+              | Pair of RayBan glasses
             td
               | #{claim.location}
             td
               | #{claim.time}
             td
-              | #{claim.resolved}    
-            
+              if (claim.resolved)
+                | Resolved
+              else
+                | Unresolved
+    
