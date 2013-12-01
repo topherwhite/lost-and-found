@@ -1,6 +1,6 @@
 {
   "name": "lost-and-found",
-  "version": "0.0.1",
+  "version": "0.0.1-2",
   "private": true,
   "scripts": {
     "start": "node app.js"
@@ -11,6 +11,9 @@
     "mongoose": "*",
     "mongoose-findorcreate": "*",
     "nodemailer": "*"
+  },
+  "subdomain": "lost-and-found",
+  "engines": {
+    "node": "0.10.x"
   }
 }
-

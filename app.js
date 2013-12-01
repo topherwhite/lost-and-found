@@ -15,7 +15,13 @@ var app = express();
 */
 
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/db');
+console.log('ENV:' + app.get('env'));
+if ('development' == app.get('env')) {
+	mongoose.connect('mongodb://localhost/db');
+} else {
+	mongoose.connect(process.env.mongo);
+}
+
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function callback () {

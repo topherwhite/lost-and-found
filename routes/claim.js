@@ -100,7 +100,7 @@ exports.create = function(req, res) {
 			} else {
 				console.log("Person found with " + person1.email + ", id:" + person1._id);
 			}
-			console.log(person1);
+			// console.log(person1);
 
 			//let's create the claim now
 			console.log('Let\'s create the claim now');
@@ -113,7 +113,7 @@ exports.create = function(req, res) {
 			  author: person1._id,
 			  item: req.body.item
 			});
-			console.log(newClaim);
+			// console.log(newClaim);
 
 			newClaim.save(function(err, claim) {
 				if (!err) {
@@ -122,7 +122,7 @@ exports.create = function(req, res) {
 					console.log("Claim created with id: " + claim._id);
 					 //sendmail
           res.render('email_claim_new', { claim:claim}, function(err, html) {
-						Mail.sendMail("New claim", person1.email, html);
+          	Mail.sendMail("New claim", person1.email, html);
           });
 
 					res.send(200, {result:'Claim created with id: ' + claim._id});
