@@ -7,13 +7,13 @@ block content
 
     // Main claim selector
     div.form-group
-      div(class="col-sm-12 btn-group",data-toggle="buttons")
+      div(class="btn-group",data-toggle="buttons")
         label(class="btn btn-primary active")
           input(type="radio",id="lost",name="claimType",value="lost")
-          | I have lost an item  
+          | lost an item  
         label(class="btn btn-primary")
           input(type="radio",id="found",name="claimType",value="found")
-          | I have found an item
+          | found an item
   
     // Person block
     h2 Person
@@ -104,6 +104,8 @@ block content
 
     div
       a.btn.btn-success(class='col-sm-12',href='javascript:LF.submitClaim();')= "Create my claim"
+
+    p
 
     script(type='text/javascript').
       $('#navClaimsAdd').addClass('active');

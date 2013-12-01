@@ -73,24 +73,26 @@ block content
 
     div
 
-      div.col-xs-6
-        a.btn.btn-primary(href='mailto:#{claim.author.email}')= "E-mail Reporter"
+      div
+        a.btn.btn-primary(class='col-xs-6',href='mailto:#{claim.author.email}')= "E-mail Reporter"
       
-      div.col-xs-6
+      div
         if (claim.author.phone)
-          a.btn.btn-primary(href='tel:#{claim.author.phone}')= "Call Reporter"
+          a.btn.btn-primary(class='col-xs-6',href='tel:#{claim.author.phone}')= "Call Reporter"
         else
-          a.btn.btn-primary(disabled)= "Call Reporter"
+          a.btn.btn-primary(class='col-xs-6',disabled)= "Call Reporter"
       br
       br
-      div.col-xs-6
-        a.btn.btn-danger(onclick="deleteClaim('#{claim.id}')")= "Delete Claim"
+      div
+        a.btn.btn-danger(class='col-xs-6',onclick="deleteClaim('#{claim.id}')")= "Delete Claim"
 
-      div.col-xs-6  
+      div
         if (!claim.resolved)
-          a.btn.btn-success(onclick="updateClaimStatus('#{claim.id}', 1)")= "Resolve Claim"
+          a.btn.btn-success(class='col-xs-6',onclick="updateClaimStatus('#{claim.id}', 1)")= "Resolve Claim"
         else
-          a.btn.btn-success(onclick="updateClaimStatus('#{claim.id}', 0)")= "Re-open Claim"
+          a.btn.btn-success(class='col-xs-6',onclick="updateClaimStatus('#{claim.id}', 0)")= "Re-open Claim"
+
+    p
 
   script(type='text/javascript').
     $('#navClaims').addClass('active');
