@@ -8,8 +8,10 @@ var PersonCtl = require("../routes/person.js");
 
 exports.list = function(req, res){
 	Claim.find().populate('author').exec(function(err, claims) {
-		console.log(claims);
-		res.render('claim_list', { claims: claims });
+		Claim.count({ resolved: false}, function(err, count) {
+			console.log(claims);
+			res.render('claim_list', { claims: claims, countOpen: count});
+		});
 	});
 };
 
@@ -29,8 +31,22 @@ exports.status = function(req, res) {
 	Claim.findByIdAndUpdate(req.body.claimId, {resolved:req.body.resolved}, function (err, claim) {
 		console.log(claim);
 		if (!err) {
-			console.log("Issue updated");
-			res.send(200, {result:'Issue updated'});
+			console.log("Claim updated");
+			res.send(200, {result:'Claim updated'});
+		} else {
+			console.log(err);
+			res.send(500, {result:'Something went wrong, please try again.'});
+		}
+	});
+};
+
+exports.delete = function(req, res) {
+	console.log(req.body)
+	Claim.findOneAndRemove(req.body.claimId, function (err, claim) {
+		console.log(claim);
+		if (!err) {
+			console.log("Claim removed");
+			res.send(200, {result:'Claim removed'});
 		} else {
 			console.log(err);
 			res.send(500, {result:'Something went wrong, please try again.'});

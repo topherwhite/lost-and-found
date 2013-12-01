@@ -2,4 +2,16 @@ extends layout
 
 block content
   h1= title
-  p Welcome to #{title}
+  p Welcome to SEPTA L&F
+  p
+    | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sollicitudin nibh id risus commodo pharetra. Donec vestibulum facilisis tellus porttitor adipiscing. Duis laoreet turpis vitae tortor condimentum sagittis.
+
+  p
+    a.btn.btn-primary(href='/claims')= "Consult the open claims"
+  p
+    a.btn.btn-primary(href='/claims/add')= "File a new claim"
+
+  script(type='text/javascript').
+    $('#navHome').addClass('active');
+
+    

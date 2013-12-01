@@ -33,19 +33,25 @@ LF.submitClaim = function() {
 function updateClaimStatus(claimId, resolved) {
   $.ajax({ type:"POST", dataType:"json", url:"/claims/status", data: {claimId:claimId, resolved:resolved},
     success: function(data) {
-      window.location = '/claims';
+      location.reload();
     }
   });  
 }
 
-$(document).ready(function() {
-  $('#claims').dataTable();
-  $('#claims').show();
+function deleteClaim(claimId) {
+  if (confirm("Are you sure?")) {
+    $.ajax({ type:"POST", dataType:"json", url:"/claims/" + claimId + "/delete",
+    success: function(data) {
+      location.href = '/claims';
+    }
+  });  
+  }
+  return false;
+}
 
-  $('.nav a').click(function (e) {
-    e.preventDefault()
-    $(this).tab('show')
-  });
+$(document).ready(function() {
+  // $('#claims').dataTable();
+  // $('#claims').show();
 });
 
 

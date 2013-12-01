@@ -1,15 +1,96 @@
 extends layout
 
 block content
-  div
-    if (claim.claimType == 'lost')
-      h1 Lost item
-    else
-      h1 Found item
+  if (claim.claimType == 'lost')
+    h1 #{claim.item.name} lost
+  else
+    h1 #{claim.item.name} found
 
-  div
-    if (claim.item)
-      | #{claim.item.name}
-    else
-      | missing name
-  
+  form.form-horizontal(role='form')
+
+    // Person block
+    h2 Reporter
+    div.form-group
+      label(for=personName, class="col-sm-2 control-label")
+        | Name:  
+      div.col-sm-10 
+        input(type="text",value="#{claim.author.name}",name="personName",id="personName",class="form-control control-label")
+      
+    div.form-group
+      label(for=personEmail, class="col-sm-2 control-label")
+        | Email:
+      div.col-sm-10
+        input(type="text",value="#{claim.author.email}",name="personEmail",id="personEmail",class="form-control control-label")
+    
+    if (claim.author.phone != "")
+      div.form-group
+        label(for=personPhone, class="col-sm-2 control-label")
+          | Phone (optional):
+        div.col-sm-10
+          input(type="text",value="#{claim.author.phone}",name="personPhone",id="personPhone",class="form-control control-label")
+    
+    // Item block
+    h2 Item
+    div.form-group
+      label(for=itemType, class="col-sm-2 control-label")
+        | Item type:
+      div.col-sm-10(id="itemType")
+        input(type="text",value="#{claim.item.itemType}",name="itemType",id="itemType",class="form-control control-label")
+      
+    div.form-group
+      label(for=itemName, class="col-sm-2 control-label")
+        | Item name:  
+      div.col-sm-10 
+        input(type="text",value="#{claim.item.name}",name="itemName",id="itemName",class="form-control control-label")
+      
+    div.form-group
+      label(for=itemDescription, class="col-sm-2 control-label")
+        | Description:
+      div.col-sm-10
+        textarea(name="itemDescription",id="itemDescription",class="form-control control-label")
+          | #{claim.item.description}
+
+    if (claim.item.serialNumber != "")
+      div.form-group
+        label(for=itemSerialNumber, class="col-sm-2 control-label")
+          | Serial number:  
+        div.col-sm-10 
+          input(type="text",value="#{claim.item.serialNumber}",name="itemSerialNumber",id="itemSerialNumber",class="form-control control-label")
+        
+    // Event details
+    h2 Event details
+    div.form-group
+      label(for=eventLocation, class="col-sm-2 control-label")
+        | Location of event:
+      div.col-sm-10 
+        input(type="text",value="#{claim.location}",name="eventLocation",id="eventLocation",class="form-control control-label")
+      
+    div.form-group
+      label(class="col-sm-2 control-label")
+        | Date of the event:
+      div.col-sm-10
+        input(type="text",value="#{claim.time}",name="eventTime",id="eventTime",class="form-control control-label")
+
+    div
+
+      div.col-xs-6
+        a.btn.btn-primary(href='mailto:#{claim.author.email}')= "E-mail Reporter"
+      
+      div.col-xs-6
+        if (claim.author.phone)
+          a.btn.btn-primary(href='tel:#{claim.author.phone}')= "Call Reporter"
+        else
+          a.btn.btn-primary(disabled)= "Call Reporter"
+      br
+      br
+      div.col-xs-6
+        a.btn.btn-danger(onclick="deleteClaim('#{claim.id}')")= "Delete Claim"
+
+      div.col-xs-6  
+        if (!claim.resolved)
+          a.btn.btn-success(onclick="updateClaimStatus('#{claim.id}', 1)")= "Resolve Claim"
+        else
+          a.btn.btn-success(onclick="updateClaimStatus('#{claim.id}', 0)")= "Re-open Claim"
+
+  script(type='text/javascript').
+    $('#navClaims').addClass('active');

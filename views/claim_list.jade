@@ -1,45 +1,29 @@
 extends layout
-
 block content
-  h1 #{claims.length} registered claims 
-    a(href="/claims/add") (Add a claim)
-  table#claims
+  
+  | You can find below the list of claims (#{countOpen} opened)
+  table#lostClaims(class='table table-striped')
     thead
       tr
-        th Claim
-        th Type
-        th Item
-        th Location
-        th Reported At
-        th Reported By
+        th Lost Item
+        th Details
         th Status
       tbody
         each claim, index in claims
           tr
             td
-              a(href="/claims/#{claim.id}") View Details
+              a(href="/claims/#{claim.id}") #{claim.item.name}
             td
-              if (claim.type == "lost")
-                | Lost Item
-              else
-                | Found Item
-            td
-              if (claim.item)
-                | #{claim.item.name}
-              else
-                | missing name
-            td
-              | #{claim.location}
-            td
-              | #{claim.time.toDateString()}
-            td
-              if (claim.author)
-                | #{claim.author.name}
-              else
-                | missing author
+              | Location: #{claim.location}
+              br
+              | When: #{claim.time.toDateString()}
+              br
+              | Reporter: #{claim.author.name}
             td
               if (claim.resolved)
-                a(onclick="updateClaimStatus('#{claim.id}', 0)") Resolved
+                | Resolved
               else
-                a(onclick="updateClaimStatus('#{claim.id}', 1)") Unresolved
-    
+                | Unresolved
+  
+  script(type='text/javascript').
+    $('#navClaims').addClass('active');

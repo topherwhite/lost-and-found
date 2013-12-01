@@ -6,11 +6,9 @@ if (fs.existsSync("./config/env_vars.js")) {
 }
 
 var express = require('express');
-var routes = require('./routes');
 var http = require('http');
 var path = require('path');
 var app = express();
-
 
 /*
 	DB
@@ -48,8 +46,9 @@ if ('development' == app.get('env')) {
 }
 
 // Index
-var routeIndex = require('./routes/index.js')
-app.get('/', routeIndex.index);
+var routeMain = require('./routes/main.js')
+app.get('/', routeMain.index);
+app.get('/contact', routeMain.contact);
 
 // Claims
 var routeClaim = require('./routes/claim.js')
@@ -58,8 +57,11 @@ app.get('/claims/add', routeClaim.add);
 app.get('/claims/:id', routeClaim.detail);
 app.get('/claims/:id/resolved', routeClaim.statusResolved);
 app.get('/claims/:id/unresolved', routeClaim.statusUnresolved);
+app.post('/claims/:id/delete', routeClaim.delete);
 app.post('/claims', routeClaim.create);
 app.post('/claims/status', routeClaim.status);
+
+// Contact
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
