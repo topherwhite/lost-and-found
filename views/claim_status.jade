@@ -1,0 +1,11 @@
+extends layout
+
+block content
+  div
+    if (status)
+      if (status == 'resolved')
+        h1 Claim is now resolved :)
+      else
+        h1 Something went wrong
+    else
+      h1 Something went wrong

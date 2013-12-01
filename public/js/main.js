@@ -5,36 +5,53 @@ LF.submitClaim = function() {
 
   var sendObj = {};
 
-  sendObj.email = $("input#email").val();
-  sendObj.phone = $("input#phone").val();
-  sendObj.type = $(".nav-tabs .active a").html();
-  sendObj.time = $("input#time-date").val()+" "+$("input#time-time").val()+":00";
-  sendObj.location = $("input#location").val();
-  sendObj.short_description = $("input#short_description").val();
-  sendObj.long_description = $("input#long_description").val();
-  sendObj.item_type = "glasses";
+  sendObj.claimType = $("input[name=claimType]:checked").val()
+  
+  var sendObjAuthor = {};  
+  sendObjAuthor.name = $("input#personName").val();
+  sendObjAuthor.email = $("input#personEmail").val();
+  sendObjAuthor.phone = $("input#personPhone").val();
+  sendObj.author = sendObjAuthor;
 
-  $.ajax({ type:"POST", dataType:"json", url:"/item", data: sendObj,
-    success: function() {
-      window.location("/item/"+sendObj.item_type);
+  var sendObjItem = {};
+  sendObjItem.itemType = $("#itemType option:selected").text(); // to replace..
+  sendObjItem.name = $("input#itemName").val();;
+  sendObjItem.description = $("textarea#itemDescription").val();;
+  sendObjItem.serialNumber = $("input#itemSerialNumber").val();;
+  sendObj.item = sendObjItem;
+
+  sendObj.time = $("input#eventDate").val()+" "+$("input#eventTime").val()+":00";
+  sendObj.location = $("input#eventLocation").val();
+
+  $.ajax({ type:"POST", dataType:"json", url:"/claims", data: sendObj,
+    success: function(data) {
+      window.location = "/claims";
     }
   });
-
 }
 
+function updateClaimStatus(claimId, resolved) {
+  $.ajax({ type:"POST", dataType:"json", url:"/claims/status", data: {claimId:claimId, resolved:resolved},
+    success: function(data) {
+      location.reload();
+    }
+  });  
+}
+
+function deleteClaim(claimId) {
+  if (confirm("Are you sure?")) {
+    $.ajax({ type:"POST", dataType:"json", url:"/claims/" + claimId + "/delete",
+    success: function(data) {
+      location.href = '/claims';
+    }
+  });  
+  }
+  return false;
+}
 
 $(document).ready(function() {
-
-
-
-  $('#claims').dataTable();
-  $('#claims').show();
-
-  $('.nav a').click(function (e) {
-    e.preventDefault()
-    $(this).tab('show')
-  });
-
+  // $('#claims').dataTable();
+  // $('#claims').show();
 });
 
 

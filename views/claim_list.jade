@@ -1,0 +1,29 @@
+extends layout
+block content
+  
+  | You can find below the list of claims (#{countOpen} opened)
+  table#lostClaims(class='table table-striped')
+    thead
+      tr
+        th Lost Item
+        th Details
+        th Status
+      tbody
+        each claim, index in claims
+          tr
+            td
+              a(href="/claims/#{claim.id}") #{claim.item.name}
+            td
+              | Location: #{claim.location}
+              br
+              | When: #{claim.time.toDateString()}
+              br
+              | Reporter: #{claim.author.name}
+            td
+              if (claim.resolved)
+                | Resolved
+              else
+                | Unresolved
+  
+  script(type='text/javascript').
+    $('#navClaims').addClass('active');

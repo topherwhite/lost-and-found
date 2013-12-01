@@ -1,18 +1,43 @@
 doctype 5
 html
   head
-    title= title
+    title= 'SEPTA L&F'
     meta(name='viewport',content='width=device-width,initial-scale=1.0')
     link(rel='stylesheet',href='//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css')
     link(rel='stylesheet',href='//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap-theme.min.css')
     link(rel='stylesheet',href='//ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css')
     link(rel='stylesheet',href='/css/main.css')
+
+    script(type='text/javascript',src='//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js')
     
   body
+    div(class='navbar navbar-fixed-top navbar-inverse',role='navigation')
+      div.container
+        div.navbar-header
+          button(type='button',class="navbar-toggle",data-toggle="collapse",data-target=".navbar-collapse")
+            span.sr-only
+              | Toggle navigation
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+          a.navbar-brand(href="/",id="navHome")
+            | SEPTA Lost and Found
+        
+        div(class='navbar-collapse collapse')
+          ul(class='nav navbar-nav')
+            li#navHome
+              a(href="/") Home
+            li#navClaims
+              a(href="/claims") View Claims
+            li#navClaimsAdd
+              a(href="/claims/add") Open a new claim
+            li#navContact
+              a(href="/contact") Contact
+        
     div.container
       block content
 
-    script(type='text/javascript',src='//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js')
     script(type='text/javascript',src='//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js')
     script(type='text/javascript',src='//ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.js')
     script(type='text/javascript',src='/js/main.js')
