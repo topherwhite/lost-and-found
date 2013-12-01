@@ -1,5 +1,5 @@
 body {
-  padding: 0px;
+  /*padding: 0px;*/
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
@@ -7,12 +7,7 @@ a {
   color: #00B7FF;
 }
 
-#claims {display:none;}
-
 .nav { width:90%; font-size:24px; }
-
 .btn-success { width:80%; }
 
-.nav {  }
-
-/*.container { padding-left:0px; padding-right:0px; }*/
+#claims {display:none;}

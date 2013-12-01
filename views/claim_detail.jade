@@ -1,0 +1,15 @@
+extends layout
+
+block content
+  div
+    if (claim.claimType == 'lost')
+      h1 Lost item
+    else
+      h1 Found item
+
+  div
+    if (claim.item)
+      | #{claim.item.name}
+    else
+      | missing name
+  

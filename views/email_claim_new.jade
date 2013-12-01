@@ -1,0 +1,24 @@
+extends layout
+
+block content
+  | 'Your claim has been logged and we\'ll get back to you as soon as possible'
+  | 'Please find below the details'
+  div
+    if (claim.claimType == 'lost')
+      h1 Lost item
+    else
+      h1 Found item
+
+  div
+    if (claim.item)
+      | #{claim.item.name}
+    else
+      | missing name
+
+  div
+    if (claim.resolved)
+      a(href="/claims/#{claim.id}/unresolved") Resolved
+    else
+      a(href="/claims/#{claim.id}/resolved") Unresolved
+
+  

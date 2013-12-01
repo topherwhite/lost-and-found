@@ -1,0 +1,106 @@
+extends layout
+
+block content
+  h1 Fill up a new claim
+  
+  form.form-horizontal(role='form')
+
+    // Main claim selector
+    div.form-group
+      div(class="col-sm-12 btn-group",data-toggle="buttons")
+        label(class="btn btn-primary")
+          input(type="radio",id="lost",name="claimType",value="lost")
+          | I have lost an item  
+        label(class="btn btn-primary")
+          input(type="radio",id="found",name="claimType",value="found")
+          | I have found an item
+  
+    // Person block
+    h2 Person
+    div.form-group
+      label(for=personName, class="col-sm-2 control-label")
+        | Name:  
+      div.col-sm-10 
+        input(type="text",placeholder="Enter your name",name="personName",id="personName",class="form-control control-label")
+      
+    div.form-group
+      label(for=personEmail, class="col-sm-2 control-label")
+        | Email:
+      div.col-sm-10
+        input(type="text",placeholder="Enter your e-mail",name="personEmail",id="personEmail",class="form-control control-label")
+    
+    div.form-group
+      label(for=personPhone, class="col-sm-2 control-label")
+        | Phone (optional):
+      div.col-sm-10
+        input(type="text",placeholder="Enter your e-mail",name="personPhone",id="personPhone",class="form-control control-label")
+
+    // Item block
+    h2 Item
+    div.form-group
+      label(for=itemName, class="col-sm-2 control-label")
+        | Item type:
+      div.col-sm-10(id="itemType")
+        select.form-control
+          option(selected)= 'Click to choose'
+          option= 'Bags, Luggage, Briefcases, Lunchbox'
+          option= 'Bikes'
+          option= 'Books'
+          option= 'Cash'
+          option= 'Checkbook'
+          option= 'Clothings/Accessories'
+          option= 'Credit Card'
+          option= 'Driver\'s License'
+          option= 'Electronics'
+          option= 'Farecards/Passes/Smart Cards'
+          option= 'Glasses'
+          option= 'Household Items/Tools'
+          option= 'IDs/Badges'
+          option= 'Jewelry'
+          option= 'Keys'
+          option= 'Musical Instruments'
+          option= 'Passports'
+          option= 'Phones'
+          option= 'Photos/Films/Albums'
+          option= 'Purses/Handbags'
+          option= 'Toys'
+          option= 'Wallets'
+          option= 'Watch'
+          option= 'Others'
+      
+    div.form-group
+      label(for=itemName, class="col-sm-2 control-label")
+        | Item name:  
+      div.col-sm-10 
+        input(type="text",placeholder="iPhone 4, Tissot Touch,..",name="itemName",id="itemName",class="form-control control-label")
+      
+    div.form-group
+      label(for=itemDescription, class="col-sm-2 control-label")
+        | Description:
+      div.col-sm-10
+        textarea(placeholder="iPhone 4 with black cover,... ",name="itemDescription",id="itemDescription",class="form-control control-label")
+
+    div.form-group
+      label(for=itemSerialNumber, class="col-sm-2 control-label")
+        | Serial number (if available):  
+      div.col-sm-10 
+        input(type="text",placeholder="XY1D03HH",name="itemSerialNumber",id="itemSerialNumber",class="form-control control-label")
+      
+    // Event details
+    h2 Event details
+    div.form-group
+      label(for=eventLocation, class="col-sm-2 control-label")
+        | Where did it happen ? 
+      div.col-sm-10 
+        input(type="text",placeholder="PHL Terminal D,..",name="eventLocation",id="eventLocation",class="form-control control-label")
+      
+    div.form-group
+      label(class="col-sm-2 control-label")
+        | When did it happen ?
+      div.col-sm-10
+        input(type="date",name="eventDate",id="eventDate")
+        input(type="time",name="eventTime",id="eventTime")
+
+
+    div
+      a.btn.btn-success(href='javascript:LF.submitClaim();')= "Create my claim"

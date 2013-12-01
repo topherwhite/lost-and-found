@@ -1,0 +1,45 @@
+extends layout
+
+block content
+  h1 #{claims.length} registered claims 
+    a(href="/claims/add") (Add a claim)
+  table#claims
+    thead
+      tr
+        th Claim
+        th Type
+        th Item
+        th Location
+        th Reported At
+        th Reported By
+        th Status
+      tbody
+        each claim, index in claims
+          tr
+            td
+              a(href="/claims/#{claim.id}") View Details
+            td
+              if (claim.type == "lost")
+                | Lost Item
+              else
+                | Found Item
+            td
+              if (claim.item)
+                | #{claim.item.name}
+              else
+                | missing name
+            td
+              | #{claim.location}
+            td
+              | #{claim.time.toDateString()}
+            td
+              if (claim.author)
+                | #{claim.author.name}
+              else
+                | missing author
+            td
+              if (claim.resolved)
+                a(onclick="updateClaimStatus('#{claim.id}', 0)") Resolved
+              else
+                a(onclick="updateClaimStatus('#{claim.id}', 1)") Unresolved
+    

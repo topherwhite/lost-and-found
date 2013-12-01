@@ -11,13 +11,24 @@ var http = require('http');
 var path = require('path');
 var app = express();
 
-// Sequelize Database ORM Initialization
-var Sequelize = require("sequelize");
-var modelNames = [ "item", "person", "claim", "bag", "clothing", "accessory", "key", "phone", "tablet"];
-var db = require("./config/sequelize.js").createConnection(Sequelize,process.env);
-global.Model = require("./model/_all.js").createModel(db,Sequelize,modelNames);
 
-global.Mail = require("./mail.js");
+/*
+	DB
+*/
+
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/db');
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function callback () {
+  // yay!
+  console.log('MongoDB connected !')
+});
+
+/*
+	Real stuff
+*/
+var Mail = require("./util/mail.js");
 
 // all environments
 app.set('port', process.env.PORT || 3000);
@@ -33,14 +44,22 @@ app.use(express.static(path.join(__dirname, 'public')));
 // development only
 if ('development' == app.get('env')) {
   app.use(express.errorHandler());
+  app.locals.pretty = true;
 }
 
-var callbacks = {}; for (var i = 0; i < modelNames.length; i++) {
-  var filePath = './routes/'+modelNames[i]+'.js'; if (fs.existsSync(filePath)) { callbacks[modelNames[i]] = require(filePath); } }
+// Index
+var routeIndex = require('./routes/index.js')
+app.get('/', routeIndex.index);
 
-app.get('/item', callbacks.item.add);
-app.post('/item', callbacks.item.create);
-app.get('/', callbacks.claim.list);
+// Claims
+var routeClaim = require('./routes/claim.js')
+app.get('/claims', routeClaim.list);
+app.get('/claims/add', routeClaim.add);
+app.get('/claims/:id', routeClaim.detail);
+app.get('/claims/:id/resolved', routeClaim.statusResolved);
+app.get('/claims/:id/unresolved', routeClaim.statusUnresolved);
+app.post('/claims', routeClaim.create);
+app.post('/claims/status', routeClaim.status);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
