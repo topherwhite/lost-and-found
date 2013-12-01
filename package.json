@@ -8,7 +8,7 @@
   "dependencies": {
     "express": "*",
     "jade": "*",
-    "mangoose": "*",
+    "mongoose": "*",
     "mongoose-findorcreate": "*",
     "nodemailer": "*"
   }
