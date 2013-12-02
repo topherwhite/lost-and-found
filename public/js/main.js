@@ -4,7 +4,7 @@ var LF = {};
 function submitClaim() {
   if (!$("#claimForm").valid())
     return;
-  
+
   var sendObj = {};
 
   sendObj.claimType = $("input[name=claimType]:checked").val()
@@ -27,7 +27,7 @@ function submitClaim() {
 
   $.ajax({ type:"POST", dataType:"json", url:"/claims", data: sendObj,
     success: function(data) {
-      window.location = "/claims";
+      window.location = "/claims/" + data.claimId + "/upload";
     }
   });
 }

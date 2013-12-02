@@ -1,10 +1,12 @@
 extends layout
 
 block content
-  h1 Fill up a new claim
+  h2 Do you want to upload some picture too ?
 
   div.form-group
     form(action="/claims/upload", method="post", enctype="multipart/form-data")
-      input(type="file", name="displayImage") 
+      input(type="hidden",name="claimId",value="#{claimId}")
+      input(type="file",name="displayImage") 
       br
       a.btn.btn-success(class='col-xs-6',onclick="submit()")= "Upload"
+      a.btn.btn-danger(class='col-xs-6',onclick="window.location='/claims'")= "Cancel"

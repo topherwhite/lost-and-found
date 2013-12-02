@@ -42,8 +42,9 @@ app.use(express.favicon());
 app.use(express.logger('dev'));
 app.use(express.bodyParser());
 app.use(express.methodOverride());
+app.use(express.static(__dirname + '/public'));
+app.use("/uploads", express.static(__dirname + "/uploads"));
 app.use(app.router);
-app.use(express.static(path.join(__dirname, 'public')));
 
 // development only
 if ('development' == app.get('env')) {
@@ -60,7 +61,7 @@ app.get('/contact', routeMain.contact);
 var routeClaim = require('./routes/claim.js')
 app.get('/claims', routeClaim.list);
 app.get('/claims/add', routeClaim.add);
-app.get('/claims/upload', routeClaim.addUpload);
+app.get('/claims/:id/upload', routeClaim.addUpload);
 app.get('/claims/:id', routeClaim.detail);
 app.get('/claims/:id/resolved', routeClaim.statusResolved);
 app.get('/claims/:id/unresolved', routeClaim.statusUnresolved);

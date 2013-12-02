@@ -23,6 +23,10 @@ var ClaimSchema = new mongoose.Schema({
   	description: String,
   	serialNumber: String
   },
+  images: [{  
+    fileName: String,
+    fileNameOrig: String
+  }]
 });
 var Claim = mongoose.model('Claim', ClaimSchema);
 

@@ -18,7 +18,7 @@ exports.list = function(req, res){
 
 exports.detail = function(req, res){
 	Claim.findById(req.params.id).populate('author').exec(function(err, claim) {
-		// console.log(claim);
+		console.log(claim);
 		res.render('claim_detail', { claim: claim });
 	});
 };
@@ -28,7 +28,8 @@ exports.add = function(req, res) {
 };
 
 exports.addUpload = function(req, res) {
-  res.render('claim_upload');
+	console.log(req.body);
+	res.render('claim_upload', {claimId: req.params.id});
 };
 
 exports.status = function(req, res) {
@@ -130,7 +131,7 @@ exports.create = function(req, res) {
           	Mail.sendMail("New claim", person1.email, html);
           });
 
-					res.send(200, {result:'Claim created with id: ' + claim._id});
+					res.send(200, {result:'Claim created with id: ' + claim._id, claimId: claim._id});
 				} else {
 					console.log(err);
 					res.send(500, {result:'Something went wrong, please try again.'});
@@ -141,17 +142,28 @@ exports.create = function(req, res) {
 };
 
 exports.upload = function(req, res) {
+	// console.log(req);
 	fs.readFile(req.files.displayImage.path, function (err, data) {
 		if (err)
 			console.log(err);
-	  // ...
-	  // var newPath = __dirname + "/uploads/uploadedFileName";
-	  var newPath = "/Users/jd/dev/lost-and-found/uploads/test.jpg";
-	  fs.writeFile(newPath, data, function (err) {
-	  	if (err)
-			console.log(err);
 	  
-	    res.redirect("back");
-	  });
+	  Claim.findById(req.body.claimId).exec(function(err, claim) {
+	  	var newPath = __dirname + "/../uploads/" + req.body.claimId + "-img" + (claim.images.length + 1) + ".jpg";
+		  console.log(newPath);
+		  fs.writeFile(newPath, data, function (err) {
+		  	if (err) {
+					console.log(err);
+		  	} else {
+		  		Claim.update({_id:req.body.claimId}, 
+		  								{$push: {images:{fileName: req.body.claimId + "-img" + (claim.images.length + 1) + ".jpg", fileNameOrig:req.files.displayImage.originalFilename}}}, function(err){
+		        if(err){
+			        console.log(err);
+		        } else {
+							res.redirect("/claims/" + req.body.claimId);
+						}
+		  		});
+				}
+			});
+		});
 	});
 }
