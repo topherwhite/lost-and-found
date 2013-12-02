@@ -12,7 +12,11 @@ block content
         each claim, index in claims
           tr
             td
-              a(href="/claims/#{claim.id}") #{claim.item.name}
+              a(href="/claims/#{claim.id}") 
+                if (claim.item.name != '')
+                  | #{claim.item.name}
+                else
+                  | N/A
             td
               | Location: #{claim.location}
               br
