@@ -1,8 +1,10 @@
 
 var LF = {};
 
-LF.submitClaim = function() {
-
+function submitClaim() {
+  if (!$("#claimForm").valid())
+    return;
+  
   var sendObj = {};
 
   sendObj.claimType = $("input[name=claimType]:checked").val()
@@ -48,10 +50,5 @@ function deleteClaim(claimId) {
   }
   return false;
 }
-
-$(document).ready(function() {
-  // $('#claims').dataTable();
-  // $('#claims').show();
-});
 
 

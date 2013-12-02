@@ -1,5 +1,6 @@
 var mongoose = require("mongoose");
 var Mail = require("../util/mail.js");
+var fs = require("fs");
 
 var Claim = require("../model/mongo.js").Claim;
 var Person = require("../model/mongo.js").Person;
@@ -9,7 +10,7 @@ var PersonCtl = require("../routes/person.js");
 exports.list = function(req, res){
 	Claim.find().populate('author').exec(function(err, claims) {
 		Claim.count({ resolved: false}, function(err, count) {
-			console.log(claims);
+			// console.log(claims);
 			res.render('claim_list', { claims: claims, countOpen: count});
 		});
 	});
@@ -17,7 +18,7 @@ exports.list = function(req, res){
 
 exports.detail = function(req, res){
 	Claim.findById(req.params.id).populate('author').exec(function(err, claim) {
-		console.log(claim);
+		// console.log(claim);
 		res.render('claim_detail', { claim: claim });
 	});
 };
@@ -26,10 +27,14 @@ exports.add = function(req, res) {
   res.render('claim_add');
 };
 
+exports.addUpload = function(req, res) {
+  res.render('claim_upload');
+};
+
 exports.status = function(req, res) {
-	console.log(req.body)
+	// console.log(req.body)
 	Claim.findByIdAndUpdate(req.body.claimId, {resolved:req.body.resolved}, function (err, claim) {
-		console.log(claim);
+		// console.log(claim);
 		if (!err) {
 			console.log("Claim updated");
 			res.send(200, {result:'Claim updated'});
@@ -43,7 +48,7 @@ exports.status = function(req, res) {
 exports.delete = function(req, res) {
 	console.log(req.body)
 	Claim.findOneAndRemove(req.body.claimId, function (err, claim) {
-		console.log(claim);
+		// console.log(claim);
 		if (!err) {
 			console.log("Claim removed");
 			res.send(200, {result:'Claim removed'});
@@ -57,7 +62,7 @@ exports.delete = function(req, res) {
 exports.statusResolved = function(req, res) {
 	console.log(req.body)
 	Claim.findByIdAndUpdate(req.params.claimId, {resolved:true}, function (err, claim) {
-		console.log(claim);
+		// console.log(claim);
 		if (!err) {
 			console.log("Issue updated");
 			res.render('claim_status', {status:'resolved'})
@@ -71,7 +76,7 @@ exports.statusResolved = function(req, res) {
 exports.statusUnresolved = function(req, res) {
 	console.log(req.body)
 	Claim.findByIdAndUpdate(req.params.claimId, {resolved:false}, function (err, claim) {
-		console.log(claim);
+		// console.log(claim);
 		if (!err) {
 			console.log("Issue updated");
 			res.render('claim_status', {status:'resolved'})
@@ -134,3 +139,19 @@ exports.create = function(req, res) {
 		}); 
 	});
 };
+
+exports.upload = function(req, res) {
+	fs.readFile(req.files.displayImage.path, function (err, data) {
+		if (err)
+			console.log(err);
+	  // ...
+	  // var newPath = __dirname + "/uploads/uploadedFileName";
+	  var newPath = "/Users/jd/dev/lost-and-found/uploads/test.jpg";
+	  fs.writeFile(newPath, data, function (err) {
+	  	if (err)
+			console.log(err);
+	  
+	    res.redirect("back");
+	  });
+	});
+}

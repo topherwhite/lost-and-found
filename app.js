@@ -60,12 +60,14 @@ app.get('/contact', routeMain.contact);
 var routeClaim = require('./routes/claim.js')
 app.get('/claims', routeClaim.list);
 app.get('/claims/add', routeClaim.add);
+app.get('/claims/upload', routeClaim.addUpload);
 app.get('/claims/:id', routeClaim.detail);
 app.get('/claims/:id/resolved', routeClaim.statusResolved);
 app.get('/claims/:id/unresolved', routeClaim.statusUnresolved);
 app.post('/claims/:id/delete', routeClaim.delete);
 app.post('/claims', routeClaim.create);
 app.post('/claims/status', routeClaim.status);
+app.post('/claims/upload', routeClaim.upload);
 
 // Contact
 

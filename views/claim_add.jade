@@ -3,7 +3,7 @@ extends layout
 block content
   h1 Fill up a new claim
   
-  form.form-horizontal(role='form')
+  form.form-horizontal(role='form',id='claimForm')
 
     // Main claim selector
     div.form-group
@@ -21,19 +21,19 @@ block content
       label(for=personName, class="col-sm-2 control-label")
         | Name:  
       div.col-sm-10 
-        input(type="text",placeholder="Enter your name",name="personName",id="personName",class="form-control control-label")
+        input(type="text",placeholder="Enter your name",name="personName",id="personName",class="form-control control-label",required)
       
     div.form-group
       label(for=personEmail, class="col-sm-2 control-label")
         | Email:
       div.col-sm-10
-        input(type="text",placeholder="Enter your e-mail",name="personEmail",id="personEmail",class="form-control control-label")
+        input(type="text",placeholder="Enter your e-mail",name="personEmail",id="personEmail",class="form-control control-label",required)
     
     div.form-group
       label(for=personPhone, class="col-sm-2 control-label")
         | Phone (optional):
       div.col-sm-10
-        input(type="text",placeholder="Enter your e-mail",name="personPhone",id="personPhone",class="form-control control-label")
+        input(type="text",placeholder="Enter your phone number",name="personPhone",id="personPhone",class="form-control control-label")
 
     // Item block
     h2 Item
@@ -72,40 +72,43 @@ block content
       label(for=itemName, class="col-sm-2 control-label")
         | Item name:  
       div.col-sm-10 
-        input(type="text",placeholder="iPhone 4, Tissot Touch,..",name="itemName",id="itemName",class="form-control control-label")
+        input(type="text",placeholder="iPhone 4, Tissot Touch,..",name="itemName",id="itemName",class="form-control control-label",required)
       
     div.form-group
       label(for=itemDescription, class="col-sm-2 control-label")
         | Description:
       div.col-sm-10
-        textarea(placeholder="iPhone 4 with black cover,... ",name="itemDescription",id="itemDescription",class="form-control control-label")
+        textarea(placeholder="iPhone 4 with black cover,... ",name="itemDescription",id="itemDescription",class="form-control control-label",required)
 
     div.form-group
       label(for=itemSerialNumber, class="col-sm-2 control-label")
         | Serial number (if available):  
       div.col-sm-10 
         input(type="text",placeholder="XY1D03HH",name="itemSerialNumber",id="itemSerialNumber",class="form-control control-label")
-      
+    
     // Event details
     h2 Event details
     div.form-group
       label(for=eventLocation, class="col-sm-2 control-label")
         | Where did it happen ? 
       div.col-sm-10 
-        input(type="text",placeholder="PHL Terminal D,..",name="eventLocation",id="eventLocation",class="form-control control-label")
+        input(type="text",placeholder="PHL Terminal D,..",name="eventLocation",id="eventLocation",class="form-control control-label",required)
       
     div.form-group
       label(class="col-sm-2 control-label")
         | When did it happen ?
       div.col-sm-10
-        input(type="date",name="eventDate",id="eventDate")
-        input(type="time",name="eventTime",id="eventTime")
-
+        input(type="date",name="eventDate",id="eventDate",required)
+        input(type="time",name="eventTime",id="eventTime",required)
 
     div
-      a.btn.btn-success(class='col-sm-12',href='javascript:LF.submitClaim();')= "Create my claim"
+      a.btn.btn-success(class='col-sm-12',href='javascript:submitClaim();')= "Create my claim"
 
     p
 
     script(type='text/javascript').
       $('#navClaimsAdd').addClass('active');
+      $(document).ready(function() {
+        $("#claimForm").validate();
+      });
+      

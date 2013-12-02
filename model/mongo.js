@@ -22,7 +22,8 @@ var ClaimSchema = new mongoose.Schema({
   	name: String,
   	description: String,
   	serialNumber: String
-  }
+  },
+  images: [type: String]
 });
 var Claim = mongoose.model('Claim', ClaimSchema);
 

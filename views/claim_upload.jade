@@ -1,0 +1,10 @@
+extends layout
+
+block content
+  h1 Fill up a new claim
+
+  div.form-group
+    form(action="/claims/upload", method="post", enctype="multipart/form-data")
+      input(type="file", name="displayImage") 
+      br
+      a.btn.btn-success(class='col-xs-6',onclick="submit()")= "Upload"
